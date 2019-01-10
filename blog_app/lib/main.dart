@@ -1,3 +1,4 @@
+import 'package:blog_app/HomePage.dart';
 import 'package:blog_app/LoginRegisterPage.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +15,9 @@ class BlogApp extends StatelessWidget {
       theme: new ThemeData(
         primarySwatch: Colors.orange,
       ),
-      home: LoginRegisterPage(),
+    //  home: LoginRegisterPage(),
+    
+    home: HomePage(),
     );
   }
 }

@@ -1,6 +1,14 @@
 import 'package:flutter/material.dart';
+import 'Authentication.dart';
 
 class LoginRegisterPage extends StatefulWidget {
+  LoginRegisterPage({
+    this.auth,
+    this.onSignedIn,
+  });
+  final AuthImplementation auth;
+  final VoidCallback onSignedIn;
+
   _LoginRegisterPageState createState() => _LoginRegisterPageState();
 }
 
@@ -23,6 +31,23 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
       return true;
     } else {
       return false;
+    }
+  }
+
+  void validateAndSubmit() async {
+    if (validateAndSave()) {
+      try {
+        if (_formType == FormType.login) {
+          String userId = await widget.auth.SignIn(_email, _password);
+          print("Login userId = " + userId);
+        } else {
+          String userId = await widget.auth.SignUp(_email, _password);
+          print("Register userId = " + userId);
+        }
+      } catch (e) {
+        print(e.toString());
+      }
+      widget.onSignedIn();
     }
   }
 
@@ -117,7 +142,7 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
     if (_formType == FormType.login) {
       return [
         RaisedButton(
-          onPressed: validateAndSave,
+          onPressed: validateAndSubmit,
           textColor: Colors.white,
           color: Colors.orange,
           child: Text(
